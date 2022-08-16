@@ -19,5 +19,4 @@ public class MsYankiApplication {
 		//Do something
 		log.info("Mensaje recibido por el consumidor: " + message);
 	}
-
 }
