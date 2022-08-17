@@ -1,7 +1,7 @@
 package com.example.msyanki.controller;
 
 import com.example.msyanki.model.CustomerWallet;
-import com.example.msyanki.repository.CustomerWalletRepository;
+import com.example.msyanki.service.CustomerWalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,36 +19,36 @@ import java.util.List;
 public class CustomerWalletController {
 
   @Autowired
-  private CustomerWalletRepository repository;
+  private CustomerWalletService walletService;
 
   @GetMapping
   public List<CustomerWallet> getWallets() {
-    List<CustomerWallet> wallets = new ArrayList<>();
-    repository.findAll().forEach(wallets::add);
-    return wallets;
+    return walletService.findAll();
   }
 
   @PostMapping
   public CustomerWallet save(@RequestBody CustomerWallet customerWallet) {
-    customerWallet.setCreatedAt(LocalDateTime.now());
-    return repository.save(customerWallet);
+    return walletService.save(customerWallet);
   }
 
   @GetMapping("/{id}")
   public CustomerWallet read(@PathVariable String id) {
-    return repository.findById(id).get();
+    return walletService.read(id);
   }
 
   @PutMapping
   public CustomerWallet update(@RequestBody CustomerWallet customerWallet) {
-    CustomerWallet wallet = repository.findById(customerWallet.getId()).get();
-    customerWallet.setCreatedAt(wallet.getCreatedAt());
-    customerWallet.setUpdatedAt(LocalDateTime.now());
-    return repository.save(customerWallet);
+    return walletService.update(customerWallet);
   }
 
   @DeleteMapping("/{id}")
   public void delete(@PathVariable String id) {
-    repository.deleteById(id);
+    walletService.delete(id);
+  }
+
+  @GetMapping("/phone/{phone}")
+  public CustomerWallet readByPhone(@PathVariable String phone) {
+    System.out.println("phone received by readByPhone: " + phone);
+    return walletService.findByCellphoneNumber(phone);
   }
 }

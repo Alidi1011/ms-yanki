@@ -4,4 +4,7 @@ import com.example.msyanki.model.CustomerWallet;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository public interface CustomerWalletRepository extends CrudRepository<CustomerWallet, String> {}
+@Repository
+public interface CustomerWalletRepository extends CrudRepository<CustomerWallet, String> {
+  CustomerWallet findByCellphoneNumber(String number);
+}

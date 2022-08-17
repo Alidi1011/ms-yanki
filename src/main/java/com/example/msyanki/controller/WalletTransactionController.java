@@ -2,6 +2,7 @@ package com.example.msyanki.controller;
 
 import com.example.msyanki.model.WalletTransaction;
 import com.example.msyanki.repository.WalletTransactionRepository;
+import com.example.msyanki.service.WalletTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,35 +22,30 @@ import java.util.List;
 public class WalletTransactionController {
 
   @Autowired
-  private WalletTransactionRepository repository;
+  private WalletTransactionService transactionService;
 
   @GetMapping
   public List<WalletTransaction> getTransactions() {
-    List<WalletTransaction> transactions = new ArrayList<>();
-    repository.findAll().forEach(transactions::add);
-    return transactions;
+    return transactionService.findAll();
   }
 
   @PostMapping
   public WalletTransaction save(@RequestBody WalletTransaction walletTransaction) {
-    walletTransaction.setCreatedAt(LocalDateTime.now());
-    return repository.save(walletTransaction);
+    return transactionService.save(walletTransaction);
   }
 
   @GetMapping("/{id}")
   public WalletTransaction read(@PathVariable String id) {
-    return repository.findById(id).get();
+    return transactionService.read(id);
   }
 
   @PutMapping
   public WalletTransaction update(@RequestBody WalletTransaction walletTransaction) {
-    WalletTransaction transaction = repository.findById(walletTransaction.getId()).get();
-    walletTransaction.setCreatedAt(transaction.getCreatedAt());
-    return repository.save(walletTransaction);
+    return transactionService.update(walletTransaction);
   }
 
   @DeleteMapping("/{id}")
   public void delete(@PathVariable String id) {
-    repository.deleteById(id);
+    transactionService.delete(id);
   }
 }

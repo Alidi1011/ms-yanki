@@ -15,6 +15,18 @@ public class WalletTransaction {
   @Id
   private String id;
   private BigDecimal amount;
+
+  @Override
+  public String toString() {
+    return "WalletTransaction{" +
+        "id='" + id + '\'' +
+        ", amount=" + amount +
+        ", phoneOrigin='" + phoneOrigin + '\'' +
+        ", phoneDestiny='" + phoneDestiny + '\'' +
+        ", createdAt=" + createdAt +
+        '}';
+  }
+
   private String phoneOrigin;
   private String phoneDestiny;
   private LocalDateTime createdAt;
