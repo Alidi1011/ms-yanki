@@ -57,8 +57,8 @@ public class WalletPaymentConsumer {
             customerWalletOrigin.setBalance(customerWalletOrigin.getBalance().subtract(paymentDto.getAmount()));
             customerWalletDestiny.setBalance(customerWalletDestiny.getBalance().add(paymentDto.getAmount()));
 
-            walletService.save(customerWalletOrigin);
-            walletService.save(customerWalletDestiny);
+            walletService.update(customerWalletOrigin);
+            walletService.update(customerWalletDestiny);
             WalletTransaction transactionSaved = transactionService.save(walletTransaction);
             log.info("walletTransaction saved in ms-yanki: {} ", transactionSaved);
         }else{

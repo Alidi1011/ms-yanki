@@ -31,14 +31,7 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
 
   @Override
   public WalletTransaction save(WalletTransaction walletTransaction) {
-    LocalDateTime dateTime;
-
-    if(walletTransaction.getCreatedAt() == null){
-      dateTime = LocalDateTime.now();
-    }else{
-      dateTime = walletTransaction.getCreatedAt();
-    }
-    walletTransaction.setCreatedAt(dateTime);
+    walletTransaction.setCreatedAt(this.getDateTime(walletTransaction.getCreatedAt()));
     return repository.save(walletTransaction);
   }
 
@@ -52,5 +45,16 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
   @Override
   public void delete(String id) {
     repository.deleteById(id);
+  }
+
+  public LocalDateTime getDateTime(LocalDateTime dateTime){
+    LocalDateTime localDateTime;
+
+    if(dateTime == null){
+      localDateTime = LocalDateTime.now();
+    }else{
+      localDateTime = dateTime;
+    }
+    return localDateTime;
   }
 }

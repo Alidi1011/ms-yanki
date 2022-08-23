@@ -46,9 +46,13 @@ public class CustomerWalletController {
     walletService.delete(id);
   }
 
-  @GetMapping("/phone/{phone}")
-  public CustomerWallet readByPhone(@PathVariable String phone) {
-    System.out.println("phone received by readByPhone: " + phone);
-    return walletService.findByCellphoneNumber(phone);
+  @GetMapping("/validateByPhone/{phone}")
+  public Boolean validateByPhone(@PathVariable String phone) {
+    CustomerWallet customerWallet = walletService.findByCellphoneNumber(phone);
+    if(customerWallet == null) {
+      return Boolean.FALSE;
+    }else{
+      return Boolean.TRUE;
+    }
   }
 }
